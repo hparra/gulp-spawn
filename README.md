@@ -2,7 +2,7 @@
 
 CLI program piping plugin for [gulp](https://github.com/wearefractal/gulp). Uses [spawn](http://nodejs.org/api/child_process.html#child_process_child_process_spawn_command_args_options).
 
-**This plugin has NOT been test thoroughly**
+**This plugin has NOT been tested thoroughly**
 
 ## Usage
 
@@ -31,4 +31,4 @@ gulp.src("./src/images/*.{jpg,png,gif}")
 
 ## The UNIX Pipe Philosophy
 
-If you write CLI programs please consider taking the time to support stdin & stdout. Piping is one of the reasons UNIX systems have endured the test of time. There is no reason to reinvent the wheel.
+If you write CLI programs please consider taking the time to support stdin & stdout. Piping is one of the many reasons UNIX systems have endured the test of time.

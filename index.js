@@ -10,6 +10,11 @@ module.exports = function(options) {
 	// generic cli plugin
 	function cli(file, callback) {
 
+		// options.cmd required
+		if(!options.cmd) {
+			throw new Error("gulp-cli: command (\"cmd\") argument required");
+		}
+
 		// clone file object, reset buffer
 		var newFile = clone(file);
 		newFile.contents = new Buffer(0);

@@ -1,7 +1,8 @@
-var fs = require("fs");
-var es = require("event-stream");
-var clone = require("clone");
-var cp = require("child_process");
+var clone = require("clone"),
+	cp = require("child_process"),
+	es = require("event-stream"),
+	fs = require("fs"),
+	path = require("path");
 
 module.exports = function(options) {
 	"use strict";
@@ -12,6 +13,16 @@ module.exports = function(options) {
 		// clone file object, reset buffer
 		var newFile = clone(file);
 		newFile.contents = new Buffer(0);
+
+		// rename file if optional `filename` function specified
+		if (options.filename && typeof options.filename === "function") {
+			var dir = path.dirname(file.path),
+				ext = path.extname(file.path),
+				base = path.basename(file.path, ext);
+
+			newFile.shortened = options.filename(base, ext);
+			newFile.path = path.join(dir, newFile.shortened);
+		}
 
 		// cli program
 		var program = cp.spawn(options.cmd, options.args);

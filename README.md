@@ -24,7 +24,11 @@ gulp.src("./src/images/*.{jpg,png,gif}")
 			"-resize",
 			"50%",
 			"-"
-		]
+		],
+		// optional
+		filename: function(base, ext) {
+			return base + "-half" + ext;
+		}
 	}))
 	.pipe(gulp.dest("./dist/images/"));
 ```

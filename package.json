@@ -1,0 +1,41 @@
+{
+	"name": "gulp-cli",
+	"description": "cli plugin for gulp",
+	"version": "0.1.",
+	"homepage": "https://github.com/hparra/gulp-cli",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/hparra/gulp-cli.git"
+	},
+	"author": {
+		"name": "Hector Parra",
+		"url": "http://hectorparra.com/"
+	},
+	"main": "./index.js",
+	"keywords": [
+		"gulpplugin",
+		"cli",
+		"shell",
+		"exec"
+	],
+	"dependencies": {
+		"event-stream": "*"
+	},
+	"devDependencies": {
+		"mocha": "*",
+		"should": "*",
+		"clone": "~0.1.11",
+		"event-stream": "~3.0.16"
+	},
+	"scripts": {
+		"test": "mocha"
+	},
+	"engines": {
+		"node": ">= 0.4.0"
+	},
+	"licenses": [
+		{
+			"type": "MIT"
+		}
+	]
+}

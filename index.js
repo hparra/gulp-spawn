@@ -11,7 +11,7 @@ module.exports = function(options) {
 
 		// options.cmd required
 		if(!options.cmd) {
-			throw new Error("gulp-spawn: command (\"cmd\") argument required");
+			callback(new Error("gulp-spawn: command (\"cmd\") argument required"), null);
 		}
 
 		// rename file if optional `filename` function specified

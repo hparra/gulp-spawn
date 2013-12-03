@@ -7,12 +7,12 @@ var clone = require("clone"),
 module.exports = function(options) {
 	"use strict";
 
-	// generic cli plugin
-	function cli(file, callback) {
+	// generic spawn plugin
+	function spawn(file, callback) {
 
 		// options.cmd required
 		if(!options.cmd) {
-			throw new Error("gulp-cli: command (\"cmd\") argument required");
+			throw new Error("gulp-spawn: command (\"cmd\") argument required");
 		}
 
 		// clone file object, reset buffer
@@ -29,7 +29,7 @@ module.exports = function(options) {
 			newFile.path = path.join(dir, newFile.shortened);
 		}
 
-		// cli program
+		// spawn program
 		var program = cp.spawn(options.cmd, options.args);
 
 		// when program receives data add it to newFile buffer
@@ -52,5 +52,5 @@ module.exports = function(options) {
 		});
 	}
 
-	return es.map(cli);
+	return es.map(spawn);
 }

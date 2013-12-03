@@ -1,11 +1,11 @@
 {
-	"name": "gulp-cli",
-	"description": "cli plugin for gulp",
+	"name": "gulp-spawn",
+	"description": "spawn plugin for gulp",
 	"version": "0.2.0",
-	"homepage": "https://github.com/hparra/gulp-cli",
+	"homepage": "https://github.com/hparra/gulp-spawn",
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/hparra/gulp-cli.git"
+		"url": "git://github.com/hparra/gulp-spawn.git"
 	},
 	"author": {
 		"name": "Hector Parra",
@@ -14,6 +14,7 @@
 	"main": "./index.js",
 	"keywords": [
 		"gulpplugin",
+		"spawn",
 		"cli",
 		"shell",
 		"exec"

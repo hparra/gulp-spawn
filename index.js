@@ -1,5 +1,4 @@
-var clone = require("clone"),
-	cp = require("child_process"),
+var cp = require("child_process"),
 	es = require("event-stream"),
 	fs = require("fs"),
 	path = require("path");
@@ -15,18 +14,14 @@ module.exports = function(options) {
 			throw new Error("gulp-spawn: command (\"cmd\") argument required");
 		}
 
-		// FIXME: this is potentially inefficient
-		// clone file object
-		var newFile = clone(file);
-
 		// rename file if optional `filename` function specified
 		if (options.filename && typeof options.filename === "function") {
 			var dir = path.dirname(file.path),
 				ext = path.extname(file.path),
 				base = path.basename(file.path, ext);
 
-			newFile.shortened = options.filename(base, ext);
-			newFile.path = path.join(dir, newFile.shortened);
+			file.shortened = options.filename(base, ext);
+			file.path = path.join(dir, file.shortened);
 		}
 
 		// spawn program
@@ -36,19 +31,20 @@ module.exports = function(options) {
 		if (file.contents instanceof Buffer) {
 
 			// create buffer
-			newFile.contents = new Buffer(0);
+			var new_contents = new Buffer(0);
 
 			// when program receives data add it to buffer
 			program.stdout.on("data", function (buffer) {
-				newFile.contents = Buffer.concat([
-					newFile.contents,
+				new_contents = Buffer.concat([
+					new_contents,
 					buffer
 				]);
 			});
 
 			// when program finishes call callback
 			program.stdout.on("end", function (close) {
-				callback(null, newFile);
+				file.contents = new_contents;
+				callback(null, file);
 			});
 
 			// "execute"
@@ -60,12 +56,12 @@ module.exports = function(options) {
 		} else { // assume we have a stream.Readable
 
 			// stream away!
-			newFile.contents = es.pipeline(
+			file.contents = es.pipeline(
 				file.contents,
 				es.duplex(program.stdin, program.stdout)
 			)
 
-			callback(null, newFile);
+			callback(null, file);
 		}
 	}
 

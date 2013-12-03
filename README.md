@@ -16,7 +16,8 @@ The following example pipes image files to ImageMagick's `convert`. In the case 
 var spawn = require("gulp-spawn");
 
 // example using ImageMagick's convert
-gulp.src("./src/images/*.{jpg,png,gif}")
+// setting "buffer: false" optional but recommended for heavy I/O
+gulp.src("./src/images/*.{jpg,png,gif}", { buffer: false })
 	.pipe(spawn({
 		cmd: "convert",
 		args: [
@@ -36,3 +37,9 @@ gulp.src("./src/images/*.{jpg,png,gif}")
 ## The UNIX Pipe Philosophy
 
 If you write spawn programs please consider taking the time to support stdin & stdout. Piping is one of the many reasons UNIX systems have endured the test of time.
+
+## Changelog
+
+v0.1.0 - Initial Release
+v0.2.0 - Added `filename` callback option
+v0.2.1 - Fixed support for streams

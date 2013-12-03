@@ -15,9 +15,9 @@ module.exports = function(options) {
 			throw new Error("gulp-spawn: command (\"cmd\") argument required");
 		}
 
-		// clone file object, reset buffer
+		// FIXME: this is potentially inefficient
+		// clone file object
 		var newFile = clone(file);
-		newFile.contents = new Buffer(0);
 
 		// rename file if optional `filename` function specified
 		if (options.filename && typeof options.filename === "function") {
@@ -32,24 +32,41 @@ module.exports = function(options) {
 		// spawn program
 		var program = cp.spawn(options.cmd, options.args);
 
-		// when program receives data add it to newFile buffer
-		program.stdout.on("data", function (buffer) {
-			newFile.contents = Buffer.concat([
-				newFile.contents,
-				buffer
-			]);
-		});
+		// check if we have a buffer or stream
+		if (file.contents instanceof Buffer) {
 
-		// when program finishes call callback
-		program.stdout.on("end", function (close) {
+			// create buffer
+			newFile.contents = new Buffer(0);
+
+			// when program receives data add it to buffer
+			program.stdout.on("data", function (buffer) {
+				newFile.contents = Buffer.concat([
+					newFile.contents,
+					buffer
+				]);
+			});
+
+			// when program finishes call callback
+			program.stdout.on("end", function (close) {
+				callback(null, newFile);
+			});
+
+			// "execute"
+			// write file buffer to program
+			program.stdin.write(file.contents, function () {
+				program.stdin.end();
+			});
+
+		} else { // assume we have a stream.Readable
+
+			// stream away!
+			newFile.contents = es.pipeline(
+				file.contents,
+				es.duplex(program.stdin, program.stdout)
+			)
+
 			callback(null, newFile);
-		});
-
-		// "execute"
-		// write file buffer to program
-		program.stdin.write(file.contents, function () {
-			program.stdin.end();
-		});
+		}
 	}
 
 	return es.map(spawn);

@@ -1,41 +1,41 @@
 {
-	"name": "gulp-spawn",
-	"description": "spawn plugin for gulp",
-	"version": "0.2.1",
-	"homepage": "https://github.com/hparra/gulp-spawn",
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/hparra/gulp-spawn.git"
-	},
-	"author": {
-		"name": "Hector Parra",
-		"url": "http://hectorparra.com/"
-	},
-	"main": "./index.js",
-	"keywords": [
-		"gulpplugin",
-		"spawn",
-		"cli",
-		"shell",
-		"exec"
-	],
-	"dependencies": {
-		"event-stream": "*"
-	},
-	"devDependencies": {
-		"mocha": "*",
-		"should": "*",
-		"event-stream": "~3.0.16"
-	},
-	"scripts": {
-		"test": "mocha"
-	},
-	"engines": {
-		"node": ">= 0.4.0"
-	},
-	"licenses": [
-		{
-			"type": "MIT"
-		}
-	]
+  "name": "gulp-spawn",
+  "description": "spawn plugin for gulp",
+  "version": "0.2.1",
+  "homepage": "https://github.com/hparra/gulp-spawn",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hparra/gulp-spawn.git"
+  },
+  "author": {
+    "name": "Hector Parra",
+    "url": "http://hectorparra.com/"
+  },
+  "main": "./index.js",
+  "keywords": [
+    "gulpplugin",
+    "spawn",
+    "cli",
+    "shell",
+    "exec"
+  ],
+  "dependencies": {
+    "gulp-util": "~2.2.14",
+    "plexer": "0.0.1"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "engines": {
+    "node": ">= 0.4.0"
+  },
+  "licenses": [
+    {
+      "type": "MIT"
+    }
+  ]
 }

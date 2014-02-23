@@ -1,6 +1,5 @@
 var cp = require("child_process"),
 	es = require("event-stream"),
-	fs = require("fs"),
 	path = require("path");
 
 module.exports = function(options) {

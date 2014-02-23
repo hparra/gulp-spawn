@@ -25,10 +25,10 @@
   },
   "devDependencies": {
     "mocha": "*",
-    "should": "*"
+    "event-stream": "~3.1.0"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "./node_modules/mocha/bin/mocha tests/*.mocha.js"
   },
   "engines": {
     "node": ">= 0.4.0"

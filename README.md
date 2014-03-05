@@ -52,4 +52,5 @@ If you write spawn programs please consider taking the time to support stdin &
 v0.1.0 - Initial Release
 v0.2.0 - Added `filename` callback option
 v0.2.1 - Fixed support for streams. Effeciency improvements.
+v0.3.0 - Latest stream support and error emits.
 

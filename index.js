@@ -4,9 +4,10 @@ var cp = require("child_process"),
 	Stream = require("stream"),
 	gUtil = require("gulp-util");
 
-var PLUGIN_NAME = 'gulp-spawn';
+var PLUGIN_NAME = "gulp-spawn";
 
 function gulpSpawn(options) {
+	"use strict";
 
 	var stream = new Stream.PassThrough({objectMode: true});
 
@@ -16,9 +17,9 @@ function gulpSpawn(options) {
 			"command (\"cmd\") argument required");
 	}
 
-	stream._transform = function(file, unused, cb) {
+	stream._transform = function (file, unused, cb) {
 
-		if(file.isNull()) {
+		if (file.isNull()) {
 			stream.push(file);
 			return cb();
 		}
@@ -40,7 +41,7 @@ function gulpSpawn(options) {
 		var errBuffer = new Buffer(0);
 		program.stderr.on("readable", function () {
 			var chunk;
-			while(chunk = program.stderr.read()) {
+			while (chunk = program.stderr.read()) {
 				errBuffer = Buffer.concat([
 					errBuffer,
 					chunk
@@ -48,9 +49,9 @@ function gulpSpawn(options) {
 			}
 		});
 		program.stderr.on("end", function () {
-			if(errBuffer.length) {
-				stream.emit('error', new gUtil.PluginError(PLUGIN_NAME,
-				errBuffer.toString('utf-8')));
+			if (errBuffer.length) {
+				stream.emit("error", new gUtil.PluginError(PLUGIN_NAME,
+				errBuffer.toString("utf-8")));
 			}
 		});
 
@@ -63,7 +64,7 @@ function gulpSpawn(options) {
 			// when program receives data add it to buffer
 			program.stdout.on("readable", function () {
 				var chunk;
-				while(chunk = program.stdout.read()) {
+				while (chunk = program.stdout.read()) {
 					newBuffer = Buffer.concat([
 						newBuffer,
 						chunk

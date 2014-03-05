@@ -19,16 +19,16 @@ describe("gulp-spawn", function () {
 		var n = 0;
 
 		var fakeFile = new gutil.File({
-			cwd: "/home/nfroidure/",
-			base: "/home/nfroidure/test",
-			path: "/home/nfroidure/test/file.js",
+			cwd: "./",
+			base: "test",
+			path: "test/file.js",
 			contents: null
 		});
 
 		var fakeFile2 = new gutil.File({
-			cwd: "/home/nfroidure/",
-			base: "/home/nfroidure/test",
-			path: "/home/nfroidure/test/file2.js",
+			cwd: "./",
+			base: "test",
+			path: "test/file2.js",
 			contents: null
 		});
 
@@ -36,13 +36,13 @@ describe("gulp-spawn", function () {
 			var newFile;
 			while (newFile = stream.read()) {
 				assert(newFile);
-				assert.equal(newFile.cwd, "/home/nfroidure/");
-				assert.equal(newFile.base, "/home/nfroidure/test");
+				assert.equal(newFile.cwd, "./");
+				assert.equal(newFile.base, "test");
 				assert.equal(newFile.contents, null);
 				if (++n === 1) {
-					assert.equal(newFile.path, "/home/nfroidure/test/file.js");
+					assert.equal(newFile.path, "test/file.js");
 				} else  {
-					assert.equal(newFile.path, "/home/nfroidure/test/file2.js");
+					assert.equal(newFile.path, "test/file2.js");
 				}
 			}
 		});
@@ -70,15 +70,15 @@ describe("gulp-spawn", function () {
 				n = 0;
 
 			var fakeFile = new gutil.File({
-				cwd: "/home/nfroidure/",
-				base: "/home/nfroidure/test",
-				path: "/home/nfroidure/test/file.js",
+				cwd: "./",
+				base: "test",
+				path: "test/file.js",
 				contents: new Stream.PassThrough()
 			});
 			var fakeFile2 = new gutil.File({
-				cwd: "/home/nfroidure/",
-				base: "/home/nfroidure/test",
-				path: "/home/nfroidure/test/file2.js",
+				cwd: "./",
+				base: "test",
+				path: "test/file2.js",
 				contents: new Stream.PassThrough()
 			});
 
@@ -91,16 +91,16 @@ describe("gulp-spawn", function () {
 				var newFile;
 				while (newFile = outputStream.read()) {
 					assert(newFile);
-					assert.equal(newFile.cwd, "/home/nfroidure/");
-					assert.equal(newFile.base, "/home/nfroidure/test");
+					assert.equal(newFile.cwd, "./");
+					assert.equal(newFile.base, "test");
 					assert(newFile.contents instanceof Stream);
 					if (++n === 1) {
-						assert.equal(newFile.path, "/home/nfroidure/test/file.js");
+						assert.equal(newFile.path, "test/file.js");
 						newFile.contents.pipe(es.wait(function (err, data) {
 							assert.equal(data, "plipplap");
 						}));
 					} else  {
-						assert.equal(newFile.path, "/home/nfroidure/test/file2.js");
+						assert.equal(newFile.path, "test/file2.js");
 						newFile.contents.pipe(es.wait(function (err, data) {
 							assert.equal(data, "plopplup");
 						}));
@@ -138,15 +138,15 @@ describe("gulp-spawn", function () {
 				n = 0;
 
 			var fakeFile = new gutil.File({
-				cwd: "/home/nfroidure/",
-				base: "/home/nfroidure/test",
-				path: "/home/nfroidure/test/file.js",
+				cwd: "./",
+				base: "test",
+				path: "test/file.js",
 				contents: new Stream.PassThrough()
 			});
 			var fakeFile2 = new gutil.File({
-				cwd: "/home/nfroidure/",
-				base: "/home/nfroidure/test",
-				path: "/home/nfroidure/test/file2.js",
+				cwd: "./",
+				base: "test",
+				path: "test/file2.js",
 				contents: new Stream.PassThrough()
 			});
 
@@ -159,16 +159,16 @@ describe("gulp-spawn", function () {
 				var newFile;
 				while (newFile = outputStream.read()) {
 					assert(newFile);
-					assert.equal(newFile.cwd, "/home/nfroidure/");
-					assert.equal(newFile.base, "/home/nfroidure/test");
+					assert.equal(newFile.cwd, "./");
+					assert.equal(newFile.base, "test");
 					assert(newFile.contents instanceof Stream);
 					if (++n === 1) {
-						assert.equal(newFile.path, "/home/nfroidure/test/file.js");
+						assert.equal(newFile.path, "test/file.js");
 						newFile.contents.pipe(es.wait(function (err, data) {
 							assert.equal(data, "plipplap");
 						}));
 					} else  {
-						assert.equal(newFile.path, "/home/nfroidure/test/file2.js");
+						assert.equal(newFile.path, "test/file2.js");
 						newFile.contents.pipe(es.wait(function (err, data) {
 							assert.equal(data, "plopplup");
 						}));
@@ -214,15 +214,15 @@ describe("gulp-spawn", function () {
 				n = 0;
 
 			var fakeFile = new gutil.File({
-				cwd: "/home/nfroidure/",
-				base: "/home/nfroidure/test",
-				path: "/home/nfroidure/test/file.js",
+				cwd: "./",
+				base: "test",
+				path: "test/file.js",
 				contents: new Stream.PassThrough()
 			});
 			var fakeFile2 = new gutil.File({
-				cwd: "/home/nfroidure/",
-				base: "/home/nfroidure/test",
-				path: "/home/nfroidure/test/file2.js",
+				cwd: "./",
+				base: "test",
+				path: "test/file2.js",
 				contents: new Stream.PassThrough()
 			});
 
@@ -235,16 +235,16 @@ describe("gulp-spawn", function () {
 				var newFile;
 				while (newFile = outputStream.read()) {
 					assert(newFile);
-					assert.equal(newFile.cwd, "/home/nfroidure/");
-					assert.equal(newFile.base, "/home/nfroidure/test");
+					assert.equal(newFile.cwd, "./");
+					assert.equal(newFile.base, "test");
 					assert(newFile.contents instanceof Stream);
 					if (++n === 1) {
-						assert.equal(newFile.path, "/home/nfroidure/test/file.js");
+						assert.equal(newFile.path, "test/file.js");
 						newFile.contents.pipe(es.wait(function (err, data) {
 							assert.equal(data, "plipplap");
 						}));
 					} else  {
-						assert.equal(newFile.path, "/home/nfroidure/test/file2.js");
+						assert.equal(newFile.path, "test/file2.js");
 						newFile.contents.pipe(es.wait(function (err, data) {
 							assert.equal(data, "plopplup");
 						}));
@@ -293,15 +293,15 @@ describe("gulp-spawn", function () {
 				n = 0;
 
 			var fakeFile = new gutil.File({
-				cwd: "/home/nfroidure/",
-				base: "/home/nfroidure/test",
-				path: "/home/nfroidure/test/file.js",
+				cwd: "./",
+				base: "test",
+				path: "test/file.js",
 				contents: new Buffer("plipplap")
 			});
 			var fakeFile2 = new gutil.File({
-				cwd: "/home/nfroidure/",
-				base: "/home/nfroidure/test",
-				path: "/home/nfroidure/test/file2.js",
+				cwd: "./",
+				base: "test",
+				path: "test/file2.js",
 				contents: new Buffer("plipplup")
 			});
 
@@ -314,14 +314,14 @@ describe("gulp-spawn", function () {
 				var newFile;
 				while (newFile = outputStream.read()) {
 					assert(newFile);
-					assert.equal(newFile.cwd, "/home/nfroidure/");
-					assert.equal(newFile.base, "/home/nfroidure/test");
+					assert.equal(newFile.cwd, "./");
+					assert.equal(newFile.base, "test");
 					assert(newFile.contents instanceof Buffer);
 					if (++n === 1) {
-						assert.equal(newFile.path, "/home/nfroidure/test/file.js");
+						assert.equal(newFile.path, "test/file.js");
 						assert.equal(newFile.contents.toString(), "plipplap");
 					} else  {
-						assert.equal(newFile.path, "/home/nfroidure/test/file2.js");
+						assert.equal(newFile.path, "test/file2.js");
 						assert.equal(newFile.contents.toString(), "plipplup");
 					}
 				}

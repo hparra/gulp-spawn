@@ -1,18 +1,26 @@
 var cp = require("child_process"),
-	es = require("event-stream"),
-	fs = require("fs"),
-	path = require("path");
+	path = require("path"),
+	Duplexer = require("plexer"),
+	Stream = require("stream"),
+	gUtil = require("gulp-util");
 
-module.exports = function(options) {
-	"use strict";
+var PLUGIN_NAME = 'gulp-spawn';
 
-	// generic spawn plugin
-	function spawn(file, callback) {
+function gulpSpawn(options) {
 
-		// options.cmd required
-		if(!options.cmd) {
-			callback(new Error("gulp-spawn: command (\"cmd\") argument required"), null);
-		}
+  var stream = new Stream.PassThrough({objectMode: true});
+
+  // options.cmd required
+  if (!options.cmd) {
+	  throw new gUtil.PluginError(PLUGIN_NAME,
+	    "command (\"cmd\") argument required");
+  }
+
+  stream._transform = function(file, unused, cb) {
+    if(file.isNull()) {
+      stream.push(file);
+      return cb();
+    }
 
 		// rename file if optional `filename` function specified
 		if (options.filename && typeof options.filename === "function") {
@@ -27,24 +35,46 @@ module.exports = function(options) {
 		// spawn program
 		var program = cp.spawn(options.cmd, options.args);
 
+		// listen to stderr and emit errors if any
+ 	  var errBuffer = new Buffer(0);
+		program.stderr.on("readable", function () {
+		  var chunk;
+		  while(chunk = program.stderr.read()) {
+			  errBuffer = Buffer.concat([
+				  errBuffer,
+				  chunk
+			  ], errBuffer.length + chunk.length);
+		  }
+		});
+		program.stderr.on("end", function () {
+			if(errBuffer.length) {
+			  stream.emit('error', new gUtil.PluginError(PLUGIN_NAME,
+	        errBuffer.toString('utf-8')));
+			}
+		});
+
 		// check if we have a buffer or stream
 		if (file.contents instanceof Buffer) {
 
 			// create buffer
-			var new_contents = new Buffer(0);
+			var newBuffer = new Buffer(0);
 
 			// when program receives data add it to buffer
-			program.stdout.on("data", function (buffer) {
-				new_contents = Buffer.concat([
-					new_contents,
-					buffer
-				]);
+			program.stdout.on("readable", function () {
+			  var chunk;
+			  while(chunk = program.stdout.read()) {
+				  newBuffer = Buffer.concat([
+					  newBuffer,
+					  chunk
+				  ], newBuffer.length + chunk.length);
+			  }
 			});
 
 			// when program finishes call callback
-			program.stdout.on("end", function (close) {
-				file.contents = new_contents;
-				callback(null, file);
+			program.stdout.on("end", function () {
+				file.contents = newBuffer;
+				stream.push(file);
+				cb();
 			});
 
 			// "execute"
@@ -56,14 +86,18 @@ module.exports = function(options) {
 		} else { // assume we have a stream.Readable
 
 			// stream away!
-			file.contents = es.pipeline(
-				file.contents,
-				es.duplex(program.stdin, program.stdout)
-			)
+			file.contents = file.contents
+			  .pipe(new Duplexer(program.stdin, program.stdout));
 
-			callback(null, file);
+			stream.push(file);
+			cb();
 		}
-	}
 
-	return es.map(spawn);
+  };
+
+  return stream;
+
 }
+
+module.exports = gulpSpawn;
+

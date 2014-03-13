@@ -33,12 +33,10 @@ function gulpSpawn(options) {
 			file.shortened = options.filename(base, ext);
 			file.path = path.join(dir, file.shortened);
 		}
-		if (options.args && typeof options.args === "function") {
-			options.args = options.args(file);
-		}
+		var args = options.args && typeof options.args === "function" ? options.args(file) : options.args;
 
 		// spawn program
-		var program = cp.spawn(options.cmd, options.args);
+		var program = cp.spawn(options.cmd, args);
 
 		// listen to stderr and emit errors if any
 		var errBuffer = new Buffer(0);

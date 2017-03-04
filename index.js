@@ -2,9 +2,18 @@ var cp = require("child_process"),
 	path = require("path"),
 	Duplexer = require("plexer"),
 	Stream = require("stream"),
-	gUtil = require("gulp-util");
+	gUtil = require("gulp-util"),
+	_ = require("underscore");
 
 var PLUGIN_NAME = "gulp-spawn";
+
+function buildArgs(file, args) {
+	"use strict";
+
+	if (!_.isFunction(args)) return args;
+
+	return args(file);
+}
 
 function gulpSpawn(options) {
 	"use strict";
@@ -35,7 +44,7 @@ function gulpSpawn(options) {
 		}
 
 		// spawn program
-		var program = cp.spawn(options.cmd, options.args);
+		var program = cp.spawn(options.cmd, buildArgs(file, options.args));
 
 		// listen to stderr and emit errors if any
 		var errBuffer = new Buffer(0);

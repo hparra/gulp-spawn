@@ -21,7 +21,8 @@
   ],
   "dependencies": {
     "gulp-util": "~2.2.14",
-    "plexer": "0.0.1"
+    "plexer": "0.0.1",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "mocha": "*",

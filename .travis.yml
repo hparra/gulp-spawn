@@ -1,3 +1,11 @@
 language: node_js
 node_js:
-  - 0.10
+- 0.1
+deploy:
+  provider: npm
+  email: hector@hectorparra.com
+  api_key:
+    secure: qUcAmc2U2C3Y/i+H0aOY4NP2bK0tTXtYGtq6g9+EMbQ3rXrPLmvbWcGam/8w+FA12JiQcsCFsDHS80Hpxjtj+PKBFh2Lw3ZsbF7gV1SnrHQt5MqvAap18EkuppQyDsou7bbMIZFpTVZnbzaHuOflaDhqqzXji4DI+zjvUsmIYEo=
+  on:
+    tags: true
+    repo: hparra/gulp-spawn

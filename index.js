@@ -33,6 +33,9 @@ function gulpSpawn(options) {
 			file.shortened = options.filename(base, ext);
 			file.path = path.join(dir, file.shortened);
 		}
+		if (options.args && typeof options.args === "function") {
+			options.args = options.args(file);
+		}
 
 		// spawn program
 		var program = cp.spawn(options.cmd, options.args, options.opts);

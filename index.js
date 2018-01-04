@@ -2,7 +2,7 @@ var cp = require("child_process"),
 	path = require("path"),
 	Duplexer = require("plexer"),
 	Stream = require("stream"),
-	gUtil = require("gulp-util");
+	PluginError = require('plugin-error');
 
 var PLUGIN_NAME = "gulp-spawn";
 
@@ -13,7 +13,7 @@ function gulpSpawn(options) {
 
 	// options.cmd required
 	if (!options.cmd) {
-		throw new gUtil.PluginError(PLUGIN_NAME,
+		throw new PluginError(PLUGIN_NAME,
 			"command (\"cmd\") argument required");
 	}
 
@@ -50,8 +50,8 @@ function gulpSpawn(options) {
 		});
 		program.stderr.on("end", function () {
 			if (errBuffer.length) {
-				stream.emit("error", new gUtil.PluginError(PLUGIN_NAME,
-				errBuffer.toString("utf-8")));
+				stream.emit("error", new PluginError(PLUGIN_NAME,
+					errBuffer.toString("utf-8")));
 			}
 		});
 

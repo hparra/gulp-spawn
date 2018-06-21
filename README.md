@@ -16,7 +16,7 @@ Not all CLI programs support piping. In fact, many newer ones don't. Some
  use to ensure piping is supported.
 
 The following example pipes image files to ImageMagick's `convert`. In the case
- of `convert`, you must specify a `-` before arguments and after arguments if
+ of `convert`, you must specify two `-` after the arguments if
  you wish to use stdin and stdout, respectively.
 
 ```javascript
@@ -28,9 +28,9 @@ gulp.src("./src/images/*.{jpg,png,gif}", { buffer: false })
 	.pipe(spawn({
 		cmd: "convert",
 		args: [
-			"-",
 			"-resize",
 			"50%",
+			"-",
 			"-"
 		],
 		// optional
